@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+  node:
+    container_name: wm-challenge-node
+    restart: always
+    build: 
+      context: ./backend
+    ports:
+      - "${SERVER_PORT}:4000"
+    links:
+      - mongo
+    volumes:
+      - ./backend:/usr/wm-server
+  
+  mongo:
+    container_name: wm-challenge-mongo
+    image: mongo
+    ports: 
+      - "${DB_PORT}:27017"
+    logging:
+      driver: none
