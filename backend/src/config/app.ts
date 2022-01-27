@@ -26,6 +26,8 @@ app.use( cors({ methods: 'GET,POST,PUT,DELETE,OPTIONS' }) );
 app.use( routes );
 
 // Init Server
-app.listen(SERVER_PORT);
+export const server = app.listen(SERVER_PORT);
 if (ENVIRONMENT == 'development')
     console.log('Listen in port',SERVER_PORT);
+
+export default app;

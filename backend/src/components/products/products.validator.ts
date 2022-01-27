@@ -15,19 +15,28 @@ export const VerifyValidation = (req:Request, res:Response, next:NextFunction) =
 export const FindProductValidator = checkSchema({
     q: {
         in: ['query'],
-        isAlphanumeric: {
-            errorMessage: 'Ingrese un texto válido.',
-            bail: true
-        },
         exists: {
             options: { checkFalsy: true },
             errorMessage: 'Ingrese el campo de búsqueda,',
             bail: true
+        }
+    }, 
+    limit: {
+        in: ['query'],
+        optional: true,
+        isInt: {
+            options: { min: 1, max: 100 },
+            errorMessage: "Ingrese un número entre 0 a 100"
         },
-        isLength: { 
-            options: { min: 4 }, 
-            errorMessage: 'Debes ingresar al menos 3 caracteres.',
-            bail: true
+        toInt: true
+    },
+    page: {
+        in: ['query'],
+        optional: true,
+        isInt: {
+            options: { min: 1 },
+            errorMessage: "Ingrese un número mayor o igual a 1"
         },
+        toInt: true
     }
 });

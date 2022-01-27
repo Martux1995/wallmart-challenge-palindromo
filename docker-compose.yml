@@ -12,11 +12,23 @@ services:
       - mongo
     volumes:
       - ./backend:/usr/wm-server
-  
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - SERVER_PORT=${SERVER_PORT}
+      - MONGODB_SERVER=${MONGODB_SERVER}
+      - MONGODB_DB=${MONGODB_DB}      
+      - MONGODB_USER=${MONGODB_USER}      
+      - MONGODB_PASS=${MONGODB_PASS}
+
   mongo:
     container_name: wm-challenge-mongo
-    image: mongo
+    image: mongo:3.6.8
     ports: 
       - "${DB_PORT}:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGODB_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_PASS} 
+    volumes:
+      - ./database:/database
     logging:
       driver: none
