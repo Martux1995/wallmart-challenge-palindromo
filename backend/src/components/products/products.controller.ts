@@ -21,14 +21,14 @@ export const FindProduct = async (req:Request<any,any,any,QueryData>, res:Respon
                 if(isPalindrome(req.query.q!))
                     pSolo.price = pSolo.price/2;
                 
-                return res.json({ msg: "Producto encontrado.", data: pSolo });
+                return res.json({ msg: "Producto encontrado.", data: [pSolo] });
             } else
-                return res.status(404).json({ msg: "Producto no existe."});
+                return res.status(404).json({ q: "Producto no existe."});
         }
         
         // If q param has less of 4 caracters, send error
         if (!req.query.q || req.query.q.length < 4)
-            return res.status(400).json({ msg: "Ingresa al menos 4 caracteres. "});
+            return res.status(400).json({ q: "Ingresa al menos 4 caracteres. "});
         
         // Find the product with pattern and page/limit sizes
         //@ts-ignore paginate package has bug with ts
@@ -39,7 +39,7 @@ export const FindProduct = async (req:Request<any,any,any,QueryData>, res:Respon
             ]
         },{
             page: req.query.page || 1,
-            limit: req.query.limit || 10
+            limit: req.query.limit || 12
         });
 
         // Make the discount if i search with a palindrome
@@ -48,11 +48,12 @@ export const FindProduct = async (req:Request<any,any,any,QueryData>, res:Respon
                 prod.price = prod.price / 2;
             }
 
-
-
-        return res.json({ msg: 'Productos obtenidos.', data: products.docs });
+        return res.json({ msg: 'Productos obtenidos.', data: products.docs, extra: {
+            totalPages: products.totalPages,
+            page: products.page
+        } });
     } catch (e:any) {
         console.log(e);
-        return res.status(400).json({ msg: 'Error al buscar los productos.'});
+        return res.status(500).json({ q: 'Error al buscar los productos.'});
     }
 }

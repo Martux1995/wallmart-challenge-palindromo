@@ -1,6 +1,7 @@
 version: "3"
 
 services:
+
   node:
     container_name: wm-challenge-node
     restart: always
@@ -19,6 +20,21 @@ services:
       - MONGODB_DB=${MONGODB_DB}      
       - MONGODB_USER=${MONGODB_USER}      
       - MONGODB_PASS=${MONGODB_PASS}
+
+  front:
+    container_name: wm-challenge-app
+    restart: always
+    build: 
+      context: ./frontend
+    volumes:
+      - ./frontend:/usr/wm-front
+    ports:
+      - "${APP_PORT}:4200"
+      - "49153:49153"
+      - "9876:9876"
+      - "49152:49152"
+    depends_on:
+      - node
 
   mongo:
     container_name: wm-challenge-mongo

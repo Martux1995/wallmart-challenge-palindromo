@@ -4,10 +4,16 @@ import { checkSchema, validationResult } from 'express-validator'
 export const VerifyValidation = (req:Request, res:Response, next:NextFunction) =>{
     const errors = validationResult(req);
 
+    const err:any = {};
+
+    for (const x of errors.array()) {
+        err[x.param] = x.msg;
+    }
+
     if (!errors.isEmpty())
         return res.status(400).json({
             msg: 'Corrija los errores del formulario.',
-            err: errors.array()
+            err: err
         });
     else next();
 }

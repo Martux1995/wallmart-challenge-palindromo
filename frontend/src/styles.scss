@@ -1,0 +1,43 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
+
+body {
+    background-color: #e4e4e4;
+}
+
+button.btn.btn-outline-custom {
+    background-color: #004997;
+    color: white;
+}
+
+.b-despacho {
+    margin-right: 3px;
+}
+
+.paginator-box {
+    padding-top: 16px;
+    background-color: #fdfdfd;
+}
+
+textarea:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+.uneditable-input:focus {   
+  border-color: #FFF;//rgba(126, 239, 104, 0.8);
+  box-shadow: 0 0px 0px #FFF inset, 0 0 0px #FFF;//rgba(126, 239, 104, 0.6);
+  outline: 0 none !important;
+}

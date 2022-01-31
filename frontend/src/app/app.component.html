@@ -1,0 +1,107 @@
+
+<!-- SUPERIOR NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <a class="navbar-brand" href="#">Lider</a>
+
+  <button class="btn btn-outline-custom" type="button">
+    <span class="navbar-toggler-icon"></span> Categorias
+  </button>
+
+
+  <form 
+    class="form-inline pl-4 w-50" 
+    [formGroup]="searchForm" 
+    (ngSubmit)="onEnterSearch()"
+  >
+    <!-- <div class="input-group-prepend" >
+      <span class="input-group-text">
+        <fa-icon [icon]="faSearch"></fa-icon>
+      </span>
+    </div> -->
+   
+    <div class="input-group w-100">
+      <div class="input-group-prepend">
+        <button class="btn btn-light" type="submit" id="button-addon1">
+          <fa-icon [icon]="faSearch"></fa-icon>
+        </button>
+      </div>
+      <input class="form-control" 
+        id="search" type="text" formControlName="search"
+        placeholder="¿Qué estás buscando?"
+        aria-describedby="button-addon1"
+        >
+    </div>
+  </form>
+</nav>
+
+
+<div class="container-flex p-4">
+
+  <div class="row pb-4">
+    <div class="col-9">
+      <h5 class="text">Resultados para <b>{{valorBusqueda}}</b> :</h5>
+    </div>
+    <div class="col-3 text-right">
+      <button class="btn btn-light shadow-sm">Ordenar por: <b>destacados</b><span class="pl-3">
+        <fa-icon [icon]="faGreaterThan"></fa-icon>
+      </span></button>
+    </div>
+  </div>
+
+  <div class="row justify-content-end">
+    <div class="col-9">
+
+      <div *ngIf="alert.on" class="row">
+        <div class="col">
+          <ngb-alert [type]="alert.type" (closed)="closeAlert()">{{ alert.message }}</ngb-alert>
+        </div>
+      </div>
+
+      <div *ngIf="productList.length !== 0" class="row">
+
+        <div *ngFor="let p of productList">
+          <div class="col-4">
+            <div class="card shadow " style="width: 18rem;">
+              <img src="http://{{p.image}}" class="card-img-top">
+              <div class="card-body">
+                <p class="card-title"><b>{{p.brand}}</b> {{p.description}}</p>
+  
+                <h5>${{p.price}} <span *ngIf="isPalindromo" class="badge badge-danger badge-pill">50%</span></h5>
+                <del *ngIf="isPalindromo" class="text-muted">${{p.price * 2}}</del>
+  
+                <div class="pt-5">
+                  <span class="badge badge-primary b-despacho"><fa-icon [icon]="faTruck"></fa-icon> despacho</span> 
+                  <span class="badge badge-warning"><fa-icon [icon]="faHome"></fa-icon> retiro</span>
+                </div>
+  
+                <div class="text-center pt-3">
+                  <a href="#" class="btn btn-outline-primary btn-sm"><b>Agregar</b></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="productList.length == 0" class="row">
+        <div class="col text-center">
+          <h3>Ingrese un término para buscar.</h3>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col-9 mt-3 text-center">
+      <ngb-pagination
+        class="d-flex justify-content-center paginator-box shadow-sm" 
+        [(page)]="page"
+        [pageSize]="pageSize"
+        [collectionSize]="totalPages * pageSize"
+        (pageChange)="changePage()"
+      ></ngb-pagination>
+    </div>
+
+  </div>
+</div>
+
+<router-outlet></router-outlet>
