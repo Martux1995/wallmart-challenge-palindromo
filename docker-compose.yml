@@ -1,6 +1,28 @@
 version: "3"
 
 services:
+  mongo:
+    container_name: wm-challenge-mongo
+    image: mongo:3.6.8
+    ports: 
+      - "${DB_PORT}:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGODB_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_PASS} 
+    logging:
+      driver: none
+  
+  populate_mongo:
+    container_name: wm-challenge-mongo-populate
+    build:
+      context: ./database
+    links:
+      - mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGODB_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_PASS} 
+    depends_on:
+      - mongo
 
   node:
     container_name: wm-challenge-node
@@ -21,6 +43,8 @@ services:
       - MONGODB_DB=${MONGODB_DB}      
       - MONGODB_USER=${MONGODB_USER}      
       - MONGODB_PASS=${MONGODB_PASS}
+    depends_on:
+      - mongo
 
   front:
     container_name: wm-challenge-app
@@ -35,18 +59,3 @@ services:
       - "49153:49153"
       - "9876:9876"
       - "49152:49152"
-    depends_on:
-      - node
-
-  mongo:
-    container_name: wm-challenge-mongo
-    image: mongo:3.6.8
-    ports: 
-      - "${DB_PORT}:27017"
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=${MONGODB_USER}
-      - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_PASS} 
-    volumes:
-      - ./database:/database
-    logging:
-      driver: none
