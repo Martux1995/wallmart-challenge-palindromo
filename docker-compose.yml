@@ -11,8 +11,8 @@ services:
       - "${SERVER_PORT}:4000"
     links:
       - mongo
-    volumes:
-      - ./backend:/usr/wm-server
+    # volumes:
+    #   - ./backend:/usr/wm-server
     environment:
       - NODE_ENV=${NODE_ENV}
       - SERVER_PORT=${SERVER_PORT}
@@ -26,8 +26,8 @@ services:
     restart: always
     build: 
       context: ./frontend
-    volumes:
-      - ./frontend:/usr/wm-front
+    # volumes:
+    #   - ./frontend:/usr/wm-front
     ports:
       - "${APP_PORT}:4200"
       - "49153:49153"
