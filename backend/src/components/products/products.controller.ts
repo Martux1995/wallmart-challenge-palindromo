@@ -23,7 +23,7 @@ export const FindProduct = async (req:Request<any,any,any,QueryData>, res:Respon
                 
                 return res.json({ msg: "Producto encontrado.", data: [pSolo] });
             } else
-                return res.status(404).json({ q: "Producto no existe."});
+                return res.status(400).json({ q: "Producto no existe."});
         }
         
         // If q param has less of 4 caracters, send error
@@ -48,10 +48,12 @@ export const FindProduct = async (req:Request<any,any,any,QueryData>, res:Respon
                 prod.price = prod.price / 2;
             }
 
+        // Return the response
         return res.json({ msg: 'Productos obtenidos.', data: products.docs, extra: {
             totalPages: products.totalPages,
             page: products.page
-        } });
+        }});
+
     } catch (e:any) {
         console.log(e);
         return res.status(500).json({ q: 'Error al buscar los productos.'});

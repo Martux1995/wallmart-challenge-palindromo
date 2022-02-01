@@ -7,10 +7,9 @@ init-service-bg:
 run-tests:
 	docker-compose run --rm node npx jest
 
-down-service:
-	docker rm -f wm-challenge-node wm-challenge-mongo wm-challenge-app wm-challenge-mongo-populate
-	docker rmi wallmart-challenge-palindromo_front wallmart-challenge-palindromo_node wallmart-challenge-palindromo_populate_mongo
+stop-service:
+	docker-compose stop
 
-reinstall-service:
-	make down-service
-	make init-service
+down-service:
+	docker-compose down
+	docker rmi $(docker images wallmart-challenge-palindromo* -q)
