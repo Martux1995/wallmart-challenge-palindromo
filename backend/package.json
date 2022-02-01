@@ -6,7 +6,7 @@
   "scripts": {
     "start": "ts-node src/index.ts",
     "dev": "nodemon -L src/index.ts",
-    "test": "npx jest"
+    "test": "NODE_ENV=test npx jest"
   },
   "keywords": [
     "Wallmart",

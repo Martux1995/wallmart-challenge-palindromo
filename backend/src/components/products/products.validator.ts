@@ -11,7 +11,7 @@ export const VerifyValidation = (req:Request, res:Response, next:NextFunction) =
     }
 
     if (!errors.isEmpty())
-        return res.status(400).json({
+        return res.status(404).json({
             msg: 'Corrija los errores del formulario.',
             err: err
         });
@@ -23,8 +23,7 @@ export const FindProductValidator = checkSchema({
         in: ['query'],
         exists: {
             options: { checkFalsy: true },
-            errorMessage: 'Ingrese el campo de búsqueda,',
-            bail: true
+            errorMessage: 'Ingrese el campo de búsqueda.',
         }
     }, 
     limit: {
@@ -32,7 +31,7 @@ export const FindProductValidator = checkSchema({
         optional: true,
         isInt: {
             options: { min: 1, max: 100 },
-            errorMessage: "Ingrese un número entre 0 a 100"
+            errorMessage: "Ingrese un número entre 0 a 100."
         },
         toInt: true
     },
@@ -41,7 +40,7 @@ export const FindProductValidator = checkSchema({
         optional: true,
         isInt: {
             options: { min: 1 },
-            errorMessage: "Ingrese un número mayor o igual a 1"
+            errorMessage: "Ingrese un número mayor o igual a 1."
         },
         toInt: true
     }
